@@ -1,3 +1,7 @@
+QUESTION:
+ Find the maximum element in an array of n integers
+
+PROGRAM:
 import java.util.*;
 
 public class MaxElementInArray {
