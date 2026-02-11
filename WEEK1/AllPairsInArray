@@ -1,3 +1,7 @@
+QUESTION:
+Print all possible pairs of elements from an array of size n.
+
+PROGRAM:
 import java.util.*;
 
 public class AllPairsInArray {
