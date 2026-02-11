@@ -1,3 +1,7 @@
+QUESTION:
+ Access and print the element at a given index in an array
+
+PROGRAM:
 import java.util.Scanner;
 
 public class AccessArrayElement {
