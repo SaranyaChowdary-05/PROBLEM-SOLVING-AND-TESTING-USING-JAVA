@@ -1,3 +1,7 @@
+QUESTION:
+Search for a given element in a sorted array using Binary Search.
+
+PROGRAM:
 import java.util.*;
 
 public class BinarySearch {
