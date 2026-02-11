@@ -1,3 +1,8 @@
+QUESTION:
+Given an array of integers and a positive integer K, write a program
+to find:The Kth smallest element
+
+PROGRAM:
 import java.util.*;
 
 public class KthSmallestElement {
