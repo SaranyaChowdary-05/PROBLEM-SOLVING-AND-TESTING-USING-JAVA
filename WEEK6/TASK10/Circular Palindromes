@@ -94,48 +94,57 @@ import java.util.*;
 
 public class Solution {
 
-    // Function to find longest palindromic substring length
-    public static int longestPalindrome(String s) {
-        int n = s.length();
-        int maxLen = 1;
-
-        for (int i = 0; i < n; i++) {
-
-            // Odd length palindrome
-            int left = i, right = i;
-            while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
-                maxLen = Math.max(maxLen, right - left + 1);
-                left--;
-                right++;
-            }
-
-            // Even length palindrome
-            left = i;
-            right = i + 1;
-            while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
-                maxLen = Math.max(maxLen, right - left + 1);
-                left--;
-                right++;
-            }
-        }
-
-        return maxLen;
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
+        if (!sc.hasNextInt()) return;
         int n = sc.nextInt();
         String s = sc.next();
-
+        
+        // Handle each rotation
         for (int k = 0; k < n; k++) {
-            // Create rotation
+            // Generate the k-th rotation
             String rotated = s.substring(k) + s.substring(0, k);
-
-            // Print longest palindrome length for this rotation
             System.out.println(longestPalindrome(rotated));
         }
+    }
 
-        sc.close();
+    // Manacher's Algorithm to find LPS in O(N)
+    public static int longestPalindrome(String s) {
+        if (s == null || s.length() == 0) return 0;
+        
+        // Transform string to handle even lengths: "aba" -> "#a#b#a#"
+        StringBuilder sb = new StringBuilder();
+        sb.append("#");
+        for (int i = 0; i < s.length(); i++) {
+            sb.append(s.charAt(i));
+            sb.append("#");
+        }
+        String t = sb.toString();
+        int[] p = new int[t.length()];
+        int center = 0, right = 0;
+        int maxLen = 0;
+        
+        for (int i = 0; i < t.length(); i++) {
+            int mirror = 2 * center - i;
+            if (i < right) {
+                p[i] = Math.min(right - i, p[mirror]);
+            }
+            
+            // Attempt to expand around center i
+            while (i + 1 + p[i] < t.length() && i - 1 - p[i] >= 0 &&
+                   t.charAt(i + 1 + p[i]) == t.charAt(i - 1 - p[i])) {
+                p[i]++;
+            }
+            
+            // Update center and right boundary
+            if (i + p[i] > right) {
+                center = i;
+                right = i + p[i];
+            }
+            
+            maxLen = Math.max(maxLen, p[i]);
+        }
+        return maxLen;
     }
 }
+
